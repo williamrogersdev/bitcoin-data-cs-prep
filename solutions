@@ -1,1 +1,70 @@
 
+
+//1.
+//console.log()
+
+//.2
+const dateFilter = function (bitData) {
+  return bitData.filter((obj) => {
+    if (obj["date"] === "2013-05-01") {
+      return true;
+    }
+    return false;
+  });
+};
+// console.log(dateFilter(bitcoinData))
+
+//3
+const datePrice = function (bitData, ...properties) {
+  return bitData.map((obj) => {
+    return properties.map((property) => {
+      return obj[property];
+    });
+  });
+};
+
+// console.log(datePrice(bitcoinData, "date", "price(USD)"))
+
+//4.
+const onlyDaysVolumeZilch = function (bitData) {
+  return bitData.filter((obj) => {
+    return obj["exchangeVolume(USD)"] !== 0;
+  });
+};
+
+console.log(datePrice(onlyDaysVolumeZilch(bitcoinData), "date"));
+
+//5.
+const bitcoinCount = function (bitData) {
+  return bitData.reduce((acc, obj) => {
+    acc += obj["generatedCoins"];
+    return acc;
+  }, 0);
+};
+
+// console.log(bitcoinCount(bitcoinData))
+
+//6.
+const overHundredDays = function (bitData) {
+  //function that filters out the days when over 100
+  //function that adds up those days
+  return bitData.filter((obj) => {
+    return obj["price(USD)"] > 100;
+  }).length;
+};
+
+// console.log(overHundredDays(bitcoinData))
+
+//7.
+const averageTransactionFees = function (bitData) {
+  //reduce method to find the sum of the transaction fees
+  let totalSum = bitData.reduce((sum, obj) => {
+    sum += obj["fees"];
+    return sum;
+  }, 0);
+  //divide by the number of days using .length property
+  //Math.floor final result
+  return Math.floor(totalSum / bitData.length);
+};
+
+// console.log(averageTransactionFees(bitcoinData))
